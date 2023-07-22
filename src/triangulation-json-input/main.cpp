@@ -21,14 +21,14 @@ using json = nlohmann::json;
 int main() {
 
     json j;
-    std::ifstream file("../json/contour.json");
+    std::ifstream inFile("../json/contour.json");
 
-    if (!file) {
+    if (!inFile) {
         std::cout << "Error reading file" << std::endl;
         return 1;
     }
-    file >> j;
-    file.close();
+    inFile >> j;
+    inFile.close();
 
     Polygon_2 polygon;
     for (const auto& element : j["points"]) {
