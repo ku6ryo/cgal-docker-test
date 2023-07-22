@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  cgal:
+    build: .
+    entrypoint: tail -f /dev/null
+    working_dir: /root/src
+    volumes:
+      - ./src:/root/src
