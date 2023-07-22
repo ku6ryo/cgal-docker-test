@@ -45,23 +45,24 @@ int main() {
     json triangles = json::array();
     for (CDT::Finite_faces_iterator fit=cdt.finite_faces_begin(); fit!=cdt.finite_faces_end();++fit) {
         CDT::Triangle t = cdt.triangle(fit);
-        json triangle = {
-            {t.vertex(0).x(), t.vertex(0).y()},
-            {t.vertex(1).x(), t.vertex(1).y()},
-            {t.vertex(2).x(), t.vertex(2).y()}
-        };
-        triangles.push_back(triangle);
-        for (int i = 0; i < 3; i++){
-            K::Point_2 p = t.vertex(i);
-            std::cout << "(" << p.x() << ", " << p.y() << ")";
+
+        float cx = (t.vertex(0).x() + t.vertex(1).x() + t.vertex(2).x()) / 3;
+        float cy = (t.vertex(0).y() + t.vertex(1).y() + t.vertex(2).y()) / 3;
+
+        if (polygon.bounded_side(K::Point_2(cx, cy)) == CGAL::ON_BOUNDED_SIDE) {
+            json triangle = {
+                {t.vertex(0).x(), t.vertex(0).y()},
+                {t.vertex(1).x(), t.vertex(1).y()},
+                {t.vertex(2).x(), t.vertex(2).y()}
+            };
+            triangles.push_back(triangle);
         }
-        std::cout << std::endl;
     }
     output["triangles"] = triangles;
     std::string outputJsonStr = output.dump();
     std::cout << outputJsonStr << std::endl;
 
-    std::fstream outFile("triangles.json", std::ios::in | std::ios::out | std::ios::app);
+    std::fstream outFile("triangles.json", std::ios::out | std::ios::trunc);
     if (outFile.is_open()) {
         outFile << outputJsonStr;
         outFile.close();
