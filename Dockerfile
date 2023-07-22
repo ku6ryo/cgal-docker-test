@@ -6,3 +6,4 @@ RUN apt install -y g++
 RUN apt install -y cmake
 RUN apt install -y libboost-all-dev
 RUN apt install -y libgmp3-dev
+RUN apt install -y nlohmann-json3-dev
