@@ -83,8 +83,6 @@ int main(int argc, char **argv)
     j_output["points"] = j_points;
     j_output["indices"] = j_indices;
     std::string outputJsonStr = j_output.dump();
-    std::cout << outputJsonStr << std::endl;
-
     std::fstream outFile("triangles.json", std::ios::out | std::ios::trunc);
     if (outFile.is_open())
     {
